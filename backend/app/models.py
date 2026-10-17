@@ -50,6 +50,19 @@ class User(Base):
     # Relationships
     jobs = relationship("Job", back_populates="recruiter")
     candidate_profile = relationship("Candidate", back_populates="user", uselist=False)
+    reset_tokens = relationship("PasswordResetToken", back_populates="user")
+
+
+class PasswordResetToken(Base):
+    __tablename__ = "password_reset_tokens"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    token = Column(String, unique=True, index=True, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
+    used = Column(Boolean, default=False)
+
+    user = relationship("User", back_populates="reset_tokens")
 
 
 class Job(Base):

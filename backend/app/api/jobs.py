@@ -39,7 +39,7 @@ def create_job(
         job_type=job_data.job_type,
         experience_level=job_data.experience_level,
         recruiter_id=current_user.id,
-        status=JobStatus.DRAFT
+        status=JobStatus.ACTIVE
     )
 
     # Generate AI embedding for the job
@@ -253,7 +253,7 @@ def get_job_applications(
             "resume_path": pdf_path,
             "summary": summary,
         })
-    result.sort(key=lambda x: x["status"], reverse=True)
+    result.sort(key=lambda x: (x.get("match_score") or 0), reverse=True)
 
     return result
 

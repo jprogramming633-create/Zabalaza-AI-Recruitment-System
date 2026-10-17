@@ -222,10 +222,13 @@ def get_job_matches(
             detail="Candidate profile not found"
         )
 
+
+
     # Get active jobs
     jobs = db.query(Job).filter(Job.status == JobStatus.ACTIVE).all()
 
     if not jobs:
+        jobs = db.query(Job).filter(Job.status.in_([JobStatus.ACTIVE, JobStatus.ON_HOLD])).all()
         return {
             'items': [],
             'insights': 'No active jobs are available right now. Check back soon for new opportunities.',

@@ -34,3 +34,6 @@ flask-cors==6.0.2
 
 
 protobuf
+supabase==2.3.5
+
+supabase
